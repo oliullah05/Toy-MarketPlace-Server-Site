@@ -28,7 +28,7 @@ const client = new MongoClient(uri, {
 
 async function run() {
   try {
-    // Connect the client to the server	(optional starting in v4.7)
+    // Connect  the client to the server	(optional starting in v4.7)
     client.connect((error) => {
       if (error) {
         console.log(error);
@@ -41,6 +41,7 @@ async function run() {
 
 app.get("/alltoys",async(req,res)=>{
     const alldata =await allToysData.find().toArray();
+    console.log(alldata);
     res.send(alldata)
 
 })
