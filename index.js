@@ -78,7 +78,7 @@ res.send(emaildata)
 
 app.post("/alltoys",async(req,res)=>{
 const newPost = req.body ;
-const result = await allChokolates.insertOne(newPost);
+const result = await allToysData.insertOne(newPost);
 res.send(result)
 })
 
