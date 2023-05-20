@@ -37,89 +37,93 @@ async function run() {
     });
 
     const allToysData = client.db("Car-Toy").collection("Car-Toy-Data");
-    
 
-app.get("/alltoys",async(req,res)=>{
-  // const email = req.params.email;
-  // console.log("email",email);
-  //    const emailfilter = {user_email:email}
-    //  console.log(email ,filter);
-// const categoryFilter = {category:req.params.email}
-// const options = {}
-// const emailquery = await allToysData.findOne(filter)
-// res.send(email)
- 
-    //  if(req.params){
-    //   console.log("email")
-    //   const alldata =await allToysData.find(emailfilter,options).toArray();   
-    //   return res.send(alldata)
-    //  }
 
-  
+    app.get("/alltoys", async (req, res) => {
+      // const email = req.params.email;
+      // console.log("email",email);
+      //    const emailfilter = {user_email:email}
+      //  console.log(email ,filter);
+      // const categoryFilter = {category:req.params.email}
+      // const options = {}
+      // const emailquery = await allToysData.findOne(filter)
+      // res.send(email)
 
- 
-
-    const alldata =await allToysData.find().limit(20).toArray();
-    
-    return res.send(alldata)
-})
-
-app.get("/alltoys/:email",async(req,res)=>{
-    const email = req.params.email;
-  // console.log("email",email);
-     const emailfilter = {user_email:email}
-     const options = {}
-    //  console.log(email ,filter);
-// const categoryFilter = {category:req.params.email}
-const emaildata = await allToysData.find(emailfilter,options).toArray()
-res.send(emaildata)
-})
-
-app.get("/singletoy/:id",async(req,res)=>{
-  const id = req.params.id;
-  // console.log(object);
-    const filterById = { _id : new ObjectId(id)};
-    const singleData = await allToysData.findOne(filterById)
-    res.send(singleData)
-})
+      //  if(req.params){
+      //   console.log("email")
+      //   const alldata =await allToysData.find(emailfilter,options).toArray();   
+      //   return res.send(alldata)
+      //  }
 
 
 
 
 
+      const alldata = await allToysData.find().limit(20).toArray();
 
-app.post("/alltoys",async(req,res)=>{
-const newPost = req.body ;
-const result = await allToysData.insertOne(newPost);
-res.send(result)
-})
+      return res.send(alldata)
+    })
 
+    app.get("/alltoys/:email", async (req, res) => {
+      const email = req.params.email;
+      // console.log("email",email);
+      const emailfilter = { user_email: email }
+      const options = {}
+      //  console.log(email ,filter);
+      // const categoryFilter = {category:req.params.email}
+      const emaildata = await allToysData.find(emailfilter, options).toArray()
+      res.send(emaildata)
+    })
 
-app.put("/alltoys/:id",async(req,res)=>{
-  const id = req.params.id;
-  const updatingData = req.body;
-  const filter = { _id : new ObjectId(id)};
-  const options = { upsert: true }
-
-  const updateData = {
-    $set: {
-      name:req.body.name,
-      email:req.body.email,
-      img:req.body.img,
-      category:req.body.category,
-    },
-  };
-  const result = await allChokolates.updateOne(filter, updateData, options);
-  res.send(result)
-})
+    app.get("/singletoy/:id", async (req, res) => {
+      const id = req.params.id;
+      // console.log(object);
+      const filterById = { _id: new ObjectId(id) };
+      const singleData = await allToysData.findOne(filterById)
+      res.send(singleData)
+    })
 
 
-app.delete("/alltoys/:id",async(req,res)=>{
-  const id = req.params.id;
-  const find = {_id:new ObjectId(id)};
-  const data = await allToysData.deleteOne(find)
-  res.send(data)
-})
+
+
+
+
+    app.post("/alltoys", async (req, res) => {
+      const newPost = req.body;
+      const result = await allToysData.insertOne(newPost);
+      res.send(result)
+    })
+
+
+    app.put("/singletoy/:id", async (req, res) => {
+      const id = req.params.id;
+      const updatingData = req.body;
+      console.log(id);
+      const filter = { _id: new ObjectId(id) };
+      const options = { upsert: true }
+      // _id,toy_name,toy_img,price,category,quantity,rating,review,description,user_name,user_email,user_img
+      const updateData = {
+        $set: {
+          toy_name: req.body.toy_name,
+          toy_img: req.body.toy_img,
+          price: req.body.price,
+          category: req.body.category,
+          rating: req.body.rating,
+          description: req.body.description,
+          quantity: req.body.quantity,
+        },
+      };
+      const result = await allToysData.updateOne(filter, updateData, options);
+      res.send(result)
+    })
+
+
+    app.delete("/alltoys/:id", async (req, res) => {
+      const id = req.params.id;
+      const find = { _id: new ObjectId(id) };
+      const data = await allToysData.deleteOne(find)
+      res.send(data)
+    })
 
 
 
