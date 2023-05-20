@@ -40,14 +40,47 @@ async function run() {
     
 
 app.get("/alltoys",async(req,res)=>{
-    const alldata =await allToysData.find().toArray();
-    console.log(alldata);
-    res.send(alldata)
+  // const email = req.params.email;
+  // console.log("email",email);
+  //    const emailfilter = {user_email:email}
+    //  console.log(email ,filter);
+// const categoryFilter = {category:req.params.email}
+// const options = {}
+// const emailquery = await allToysData.findOne(filter)
+// res.send(email)
+ 
+    //  if(req.params){
+    //   console.log("email")
+    //   const alldata =await allToysData.find(emailfilter,options).toArray();   
+    //   return res.send(alldata)
+    //  }
 
+  
+
+ 
+
+    const alldata =await allToysData.find().limit(20).toArray();
+    
+    return res.send(alldata)
+})
+
+app.get("/alltoys/:email",async(req,res)=>{
+    const email = req.params.email;
+  // console.log("email",email);
+     const emailfilter = {user_email:email}
+     const options = {}
+    //  console.log(email ,filter);
+// const categoryFilter = {category:req.params.email}
+const emaildata = await allToysData.find(emailfilter,options).toArray()
+res.send(emaildata)
 })
 
 
-
+app.post("/alltoys",async(req,res)=>{
+const newPost = req.body ;
+const result = await allChokolates.insertOne(newPost);
+res.send(result)
+})
 
 
 
