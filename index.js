@@ -82,8 +82,17 @@ async function run() {
       const singleData = await allToysData.findOne(filterById)
       res.send(singleData)
     })
-
-
+  
+ app.get("/category/:name",async(req,res)=>{
+  const  category = req.params.name;
+  console.log(" category", category);
+  const  categoryfilter = {category:  category }
+  const options = {}
+  //  console.log( category ,filter);
+  // const categoryFilter = {category:req.params. category}
+  const  categorydata = await allToysData.find( categoryfilter, options).toArray()
+  res.send( categorydata)
+ })
 
 
 
