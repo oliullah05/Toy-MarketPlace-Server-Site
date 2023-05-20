@@ -64,16 +64,29 @@ async function run() {
       return res.send(alldata)
     })
 
+
+
     app.get("/alltoys/:email", async (req, res) => {
-      const email = req.params.email;
-      // console.log("email",email);
-      const emailfilter = { user_email: email }
-      const options = {}
-      //  console.log(email ,filter);
-      // const categoryFilter = {category:req.params.email}
-      const emaildata = await allToysData.find(emailfilter, options).toArray()
-      res.send(emaildata)
-    })
+  const email = req.params.email;
+  const emailfilter = { user_email: email };
+  const options = {};
+  const emaildata = await allToysData
+    .find(emailfilter, options)
+    .toArray();
+
+  const sortedData = emaildata.sort((a, b) => {
+    const priceA = parseInt(a.price);
+    const priceB = parseInt(b.price);
+    return priceA - priceB;
+  });
+
+  res.send(sortedData);
+});
+
+
+
+
+
 
     app.get("/singletoy/:id", async (req, res) => {
       const id = req.params.id;
@@ -85,7 +98,7 @@ async function run() {
   
  app.get("/category/:name",async(req,res)=>{
   const  category = req.params.name;
-  console.log(" category", category);
+  // console.log(" category", category);
   const  categoryfilter = {category:  category }
   const options = {}
   //  console.log( category ,filter);
