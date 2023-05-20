@@ -75,12 +75,44 @@ const emaildata = await allToysData.find(emailfilter,options).toArray()
 res.send(emaildata)
 })
 
+app.get("/singletoy/:id",async(req,res)=>{
+  const id = req.params.id;
+  // console.log(object);
+    const filterById = { _id : new ObjectId(id)};
+    const singleData = await allToysData.findOne(filterById)
+    res.send(singleData)
+})
+
+
+
+
+
 
 app.post("/alltoys",async(req,res)=>{
 const newPost = req.body ;
 const result = await allToysData.insertOne(newPost);
 res.send(result)
 })
+
+
+app.put("/alltoys/:id",async(req,res)=>{
+  const id = req.params.id;
+  const updatingData = req.body;
+  const filter = { _id : new ObjectId(id)};
+  const options = { upsert: true }
+
+  const updateData = {
+    $set: {
+      name:req.body.name,
+      email:req.body.email,
+      img:req.body.img,
+      category:req.body.category,
+    },
+  };
+  const result = await allChokolates.updateOne(filter, updateData, options);
+  res.send(result)
+})
+
 
 app.delete("/alltoys/:id",async(req,res)=>{
   const id = req.params.id;
