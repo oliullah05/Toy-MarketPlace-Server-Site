@@ -32,33 +32,21 @@ async function run() {
     client.connect((error) => {
       if (error) {
         console.log(error);
-        return;
+        return 
       }
     });
 
     const allToysData = client.db("Car-Toy").collection("Car-Toy-Data");
 
-// // search bar backend by Toy name
-// const indexKeys ={toy_name:1}
-// const indexOption = { name: "ToyName_2" };
-// const result = await allToysData.createIndex(indexKeys, indexOption);
-
-
-
-// app.get("/search/:toyName", async (req, res) => {
-//   const toyName = req.params.toyName;
-//   console.log(toyName);
-//   const result = await allToysData.find({ toy_name: { $regex: toyName, $options: "i" } }).toArray();
-//   res.send(result);
-// });
-
-// Drop the existing index if it exists
-// await allToysData.dropIndex("toy_name_1");
+;
 
 // Create a new index
 const indexKeys = { toy_name: 1 };
 const indexOptions = { name: "ToyNameIndex" };
-const result = await allToysData.createIndex(indexKeys, indexOptions);
+const result =  allToysData.createIndex(indexKeys, indexOptions);
+
+
+
 
 app.get("/search/:toyName", async (req, res) => {
   const toyName = req.params.toyName;
